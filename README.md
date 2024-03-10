@@ -48,7 +48,7 @@
     # 终端二
     python server.py
     ```
-    
+
 ### docker 部署
 
 docker 部署时，当前目录创建`config.json`，填入我们刚刚抓取的变量，如果是`docker-compose.yml`，就跟它同级目录创建
@@ -60,7 +60,7 @@ docker 部署时，当前目录创建`config.json`，填入我们刚刚抓取的
     "refresh_token": "Bearer ..."
 }
 ```
-    
+
 ```
 docker run --name reverse-kimi \
     --restart always \

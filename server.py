@@ -6,9 +6,9 @@ from sse_starlette.sse import EventSourceResponse
 
 class Request(BaseModel):
     messages: list
-    model: str
+    model: str = None
     stream: bool = None
-    temperature: float
+    temperature: float = None
     presence_penalty: float = None
     frequency_penalty: float = None
     top_p: int = None
