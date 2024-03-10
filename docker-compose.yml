@@ -3,7 +3,7 @@ version: '3'
 services:
   reverse-kimi:
     container_name: reverse-kimi
-    image: yangclivia/reverse-kimi:latest
+    image: yunpengtai/reverse-kimi:latest
     restart: always
     ports:
       - "6867:6867"
