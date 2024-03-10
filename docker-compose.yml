@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  backend-to-api:
+    image: yangclivia/reverse-kimi:latest
+    restart: always
+    ports:
+      - "6867:6867"
+    volumes:
+      - ./config.json:/app/config.json
+    environment:
+      - TZ=Asia/Shanghai
