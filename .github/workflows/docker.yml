@@ -9,7 +9,6 @@ on:
         description: 'Tag Name'
         required: true
 
-
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
@@ -41,7 +40,7 @@ jobs:
         file: ./Dockerfile
         push: true
         tags: |
-          yangclivia/pandora-to-api:${{ steps.tag_name.outputs.tag }}
-          yangclivia/pandora-to-api:0.7.7
+          yangclivia/reverse-kimi:${{ steps.tag_name.outputs.tag }}
+          yangclivia/reverse-kimi:latest
         platforms: linux/amd64,linux/arm64
         build-args: TARGETPLATFORM=${{ matrix.platform }}
