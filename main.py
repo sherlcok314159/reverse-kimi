@@ -1,9 +1,9 @@
 import json
 import time
 import requests
+from utils import load_config, write_tokens
 
-# 因为对话的 history 由我们决定，所以直接指定
-CHAT_ID = 'cnhsul9kqq4ohv5hbni0'
+CHAT_ID = load_config()['chat_id']
 CHAT_URL = f'https://kimi.moonshot.cn/api/chat/{CHAT_ID}/completion/stream'
 REFRESH_INTERVAL = 5 * 60
 REFRESH_URL = 'https://kimi.moonshot.cn/api/auth/token/refresh'
@@ -19,20 +19,7 @@ HEADERS = {
 }
 
 
-def load_tokens():
-    return json.load(open('tokens.json', encoding='utf-8'))
-
-
-def write_tokens(auth_token, refresh_token):
-    with open('tokens.json', 'w', encoding='utf-8') as w:
-        w.write(json.dumps({
-            "auth_token": auth_token,
-            "refresh_token": refresh_token
-        }))
-
 # list 和 create 头部都是 auth_token 来鉴权
-
-
 def list_conversations():
     response = requests.post(LIST_URL, headers=HEADERS, json={}).json()
     return response['items']
@@ -46,7 +33,7 @@ def create_conversation(name):
 
 
 async def get_reply(messages):
-    HEADERS['Authorization'] = load_tokens()['auth_token']
+    HEADERS['Authorization'] = load_config()['auth_token']
     # chat_id = create_conversation('新的聊天')
     # 添加文件，需要在 Kimi 官方上传好
     # messages.append({'content': 'https://prod-chat-kimi.tos-s3-cn-beijing.volces.com/prod-chat-kimi/ckiuir33aesg978thq90/2024-03-03/cnhtnlsudu6ec6vquo9g/3e4545519d5a8a56256980d9fda4f2de_720w_thumbnail.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKLTYTJlNjgwMjY2ZDBkNDFiYmI5YWNiZDBlZmFmYjIzZTA%2F20240303%2Fcn-beijing%2Fs3%2Faws4_request&X-Amz-Date=20240303T020928Z&X-Amz-Expires=518400&X-Amz-SignedHeaders=host&X-Amz-Signature=f9c5dc63e55256871a54f453bc23efde8a9a78078cd7e778cf4dad86987e0a4b', 'type': 'file'})
@@ -95,7 +82,7 @@ async def get_reply(messages):
 
 def refresh():
     global refresh_token
-    refresh_token = load_tokens()['refresh_token']
+    refresh_token = load_config()['refresh_token']
     HEADERS['Authorization'] = refresh_token
     response = requests.get(REFRESH_URL, headers=HEADERS).json()
     auth_token, refresh_token = list(response.values())

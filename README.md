@@ -24,14 +24,21 @@
 
 - 首先按照 requirements.txt 安装好依赖
 - 接着登录 [Kimi官网](https://kimi.moonshot.cn/chat/)，打开一个聊天界面，等个十分钟左右，打开浏览器调试界面[F12]，然后刷新，寻找 access_token 和 refresh_token
-![](images/console.png)，有了这两个之后，根目录下创建`tokens.json`，填入以下：
+![](images/console.png)，有了这两个之后，根目录下创建`config.json`，填入以下：
     ```json
     {
         "auth_token": "Bearer ...",
         "refresh_token": "Bearer ..."
     }
     ```
-- 获取你当前的会话 id，就是你网址后面那一串，比如`https://kimi.moonshot.cn/chat/cnhsul9kqq4ohv5hbni0`就是`cnhsul9kqq4ohv5hbni0`，然后将其替换掉 main 里的 `CHAT_ID`
+- 获取你当前的会话 id，就是你网址后面那一串，比如`https://kimi.moonshot.cn/chat/cnhsul9kqq4ohv5hbni0`就是`cnhsul9kqq4ohv5hbni0`，然后将其填入之前的 `config.json`
+    ```json
+    {
+        "chat_id": "...",
+        "auth_token": "Bearer ...",
+        "refresh_token": "Bearer ..."
+    }
+    ```
 - 接着开两个终端，一个负责刷新，一个负责接受请求
     ```bash
     # 终端一
