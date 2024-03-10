@@ -47,4 +47,33 @@
     # 终端二
     python server.py
     ```
+    
+## docker部署详情
+```
+docker run --name reverse-kimi \
+    --restart always \
+    -p 6867:6867 \
+    -v $(pwd)/config.json:/app/config.json \
+    -e TZ=Asia/Shanghai \
+    yunpengtai/reverse-kimi:latest
+```
+
+## Docker Compose部署详情
+```
+代码模板
+version: '3'
+
+services:
+  reverse-kimi:
+    container_name: reverse-kimi
+    image: yunpengtai/reverse-kimi:latest
+    restart: always
+    ports:
+      - "6867:6867"
+    volumes:
+      - ./config.json:/app/config.json
+    environment:
+      - TZ=Asia/Shanghai
+```
+
 - 都运行起来之后，默认的端口在 `6867`（可以在 server.py 里面进行修改），可以像访问 openai 的 api 一样访问，`http://localhost:6867/v1/chat/completitions`
