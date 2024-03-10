@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  reverse-kimi:
+    container_name: reverse-kimi
+    image: yunpengtai/reverse-kimi:latest
+    restart: always
+    ports:
+      - "6867:6867"
+    volumes:
+      - ./config.json:/app/config.json
+    environment:
+      - TZ=Asia/Shanghai
