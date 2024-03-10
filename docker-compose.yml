@@ -2,6 +2,7 @@ version: '3'
 
 services:
   reverse-kimi:
+    container_name: reverse-kimi
     image: yangclivia/reverse-kimi:latest
     restart: always
     ports:
