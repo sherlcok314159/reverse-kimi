@@ -15,4 +15,4 @@ RUN pip3 install --upgrade pip
 RUN pip3 install --no-cache-dir --upgrade -r requirements.txt
 
 # 在容器启动时先运行 main.py，然后运行 server.py
-CMD ["sh", "-c", "python3 main.py && python3 server.py"]
+CMD ["sh", "-c", "python3 main.py & python3 server.py"]
