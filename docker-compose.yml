@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  backend-to-api:
+  reverse-kimi:
     image: yangclivia/reverse-kimi:latest
     restart: always
     ports:
