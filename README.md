@@ -22,16 +22,17 @@
 
 ## 教程
 
+### 获取变量
+
+- 登录 [Kimi官网](https://kimi.moonshot.cn/chat/)，打开一个聊天界面，等个十分钟左右，打开浏览器调试界面[F12]，然后刷新，寻找 access_token 和 refresh_token
+![](images/console.png)
+- 获取你当前的会话 id，就是你网址后面那一串，比如`https://kimi.moonshot.cn/chat/cnhsul9kqq4ohv5hbni0`就是`cnhsul9kqq4ohv5hbni0`，这是我们需要的`chat_id`
+
+
+### 手动部署
+
 - 首先按照 requirements.txt 安装好依赖
-- 接着登录 [Kimi官网](https://kimi.moonshot.cn/chat/)，打开一个聊天界面，等个十分钟左右，打开浏览器调试界面[F12]，然后刷新，寻找 access_token 和 refresh_token
-![](images/console.png)，有了这两个之后，根目录下创建`config.json`，填入以下：
-    ```json
-    {
-        "auth_token": "Bearer ...",
-        "refresh_token": "Bearer ..."
-    }
-    ```
-- 获取你当前的会话 id，就是你网址后面那一串，比如`https://kimi.moonshot.cn/chat/cnhsul9kqq4ohv5hbni0`就是`cnhsul9kqq4ohv5hbni0`，然后将其填入之前的 `config.json`
+- 根目录创建`config.json`，填入我们刚刚抓取的变量
     ```json
     {
         "chat_id": "...",
@@ -39,7 +40,7 @@
         "refresh_token": "Bearer ..."
     }
     ```
-- 接着开两个终端，一个负责刷新，一个负责接受请求
+- 再开两个终端，一个负责刷新，一个负责接受请求
     ```bash
     # 终端一
     python main.py
@@ -48,7 +49,18 @@
     python server.py
     ```
     
-## docker部署详情
+### docker 部署
+
+docker 部署时，当前目录创建`config.json`，填入我们刚刚抓取的变量，如果是`docker-compose.yml`，就跟它同级目录创建
+
+```json
+{
+    "chat_id": "...",
+    "auth_token": "Bearer ...",
+    "refresh_token": "Bearer ..."
+}
+```
+    
 ```
 docker run --name reverse-kimi \
     --restart always \
@@ -58,9 +70,8 @@ docker run --name reverse-kimi \
     yunpengtai/reverse-kimi:latest
 ```
 
-## Docker Compose部署详情
+### Docker Compose 部署
 ```
-代码模板
 version: '3'
 
 services:
@@ -76,4 +87,4 @@ services:
       - TZ=Asia/Shanghai
 ```
 
-- 都运行起来之后，默认的端口在 `6867`（可以在 server.py 里面进行修改），可以像访问 openai 的 api 一样访问，`http://localhost:6867/v1/chat/completitions`
+都运行起来之后，默认的端口在 `6867`（可以在 server.py 里面进行修改），可以像访问 openai 的 api 一样访问，`http://localhost:6867/v1/chat/completitions`
