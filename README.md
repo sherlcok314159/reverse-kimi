@@ -9,6 +9,8 @@
 - 逆向了月之暗面公司的 Kimi-chat，通过模拟网页端交互来免费调用 API，可以将其加入一些自建 UI，比如 Chat-Next-web 和 lobe-chat
 - 本地直接部署，实现 `/v1/chat/completitions` 端点，支持**流式传输**
 - 使用现代框架，Fast-API + Uvicorn，更加符合开发规范
+- 支持 docker 部署
+- 支持 OAuth 认证
 - 极简实现，方便二次开发
 
 ## 效果
@@ -24,18 +26,17 @@
 
 ### 获取变量
 
-- 登录 [Kimi官网](https://kimi.moonshot.cn/chat/)，打开一个聊天界面，等个十分钟左右，打开浏览器调试界面[F12]，然后刷新，寻找 access_token 和 refresh_token
+登录 [Kimi官网](https://kimi.moonshot.cn/chat/)，打开一个聊天界面，等个十分钟左右，打开浏览器调试界面[F12]，然后刷新，寻找 access_token 和 refresh_token
 ![](images/console.png)
-- 获取你当前的会话 id，就是你网址后面那一串，比如`https://kimi.moonshot.cn/chat/cnhsul9kqq4ohv5hbni0`就是`cnhsul9kqq4ohv5hbni0`，这是我们需要的`chat_id`
 
 
 ### 手动部署
 
 - 首先按照 requirements.txt 安装好依赖
-- 根目录创建`config.json`，填入我们刚刚抓取的变量
+- 根目录创建`config.json`，填入我们刚刚抓取的变量，token 为你的 key，如果不填会返回未认证错误，可以理解为 openai 的 api key
     ```json
     {
-        "chat_id": "...",
+        "token": "Bearer ...",
         "auth_token": "Bearer ...",
         "refresh_token": "Bearer ..."
     }
@@ -55,7 +56,7 @@ docker 部署时，当前目录创建`config.json`，填入我们刚刚抓取的
 
 ```json
 {
-    "chat_id": "...",
+    "token": "Bearer ...",
     "auth_token": "Bearer ...",
     "refresh_token": "Bearer ..."
 }
@@ -91,7 +92,7 @@ services:
 
 ## 注意事项
 
-提交时只能包含下列项，若有未出现的，则会报错
+提交时只能包含下列项，若有未出现的，则会报错，其中 messages 是必须项，也可以查看`http://localhost:6867/docs`查看文档
 
 ```json
 {

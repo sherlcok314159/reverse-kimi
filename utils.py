@@ -1,7 +1,9 @@
 import json
 
+
 def load_config():
     return json.load(open('config.json', encoding='utf-8'))
+
 
 def write_tokens(auth_token, refresh_token):
     cfg = load_config()
