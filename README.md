@@ -88,3 +88,20 @@ services:
 ```
 
 都运行起来之后，默认的端口在 `6867`（可以在 server.py 里面进行修改），可以像访问 openai 的 api 一样访问，`http://localhost:6867/v1/chat/completitions`
+
+## 注意事项
+
+提交时只能包含下列项，若有未出现的，则会报错
+
+```json
+{
+    "messages": list
+    "model": str
+    "stream": bool
+    "temperature": float
+    "presence_penalty": float
+    "frequency_penalty": float
+    "top_p": int
+    "max_tokens": int
+}
+```
