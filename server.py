@@ -25,6 +25,8 @@ class Request(BaseModel):
 @app.post("/v1/chat/completions")
 async def answer(request: Request, token: str = Depends(oauth2_scheme)):
     if token != TOKEN:
+        print(f"请求的 token: {token}")
+        print(f"设置的 token: {TOKEN}")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid authentication credentials",
