@@ -1,5 +1,16 @@
 # reverse-kimi
 
+## 目录
+
+* [声明](#声明)
+* [Features](#Features)
+* [效果](#效果)
+* [教程](#教程)
+  * [手动部署](#手动部署)
+  * [docker 部署](#docker)
+  * [docker-compose](#docker-compose)
+* [注意事项](#注意事项)
+
 ## 声明
 
 研究 Kimi-chat 的逆向 API，仅供研究使用，禁止一切商用，若商用使用者承担一切责任。
@@ -50,7 +61,7 @@
     python server.py
     ```
 
-### docker 部署
+### docker
 
 docker 部署时，当前目录创建`config.json`，填入我们刚刚抓取的变量，如果是`docker-compose.yml`，就跟它同级目录创建
 
@@ -71,7 +82,7 @@ docker run --name reverse-kimi \
     yunpengtai/reverse-kimi:latest
 ```
 
-### Docker Compose 部署
+### docker-compose
 ```
 version: '3'
 
