@@ -23,12 +23,14 @@
 ## Features
 
 - 逆向了月之暗面公司的 Kimi-chat，通过模拟网页端交互来免费调用 API，可以将其加入一些自建 UI，比如 Chat-Next-web 和 lobe-chat
+- 支持网页搜索（关键词或者网址）
+- 支持文件阅读（文件链接）
+- 支持多轮对话
 - 本地直接部署，实现 `/v1/chat/completitions` 端点，支持**流式传输**
 - 使用现代框架，Fast-API + Uvicorn，更加符合开发规范
 - 支持 docker 部署
 - 支持 OAuth 认证
 - 极简实现，方便二次开发
-- 支持多轮对话
 
 ## 效果
 
@@ -36,8 +38,11 @@
 ![](images/who.png)
 2. Kimi 自带的浏览功能
 ![](images/browse.png)
+![](images/usa.png)
 3. Kimi 自带的文件阅读功能
 ![](images/pdf.png)
+4. Kimi 多轮对话
+![](images/multi_turn.png)
 
 ## 教程
 
