@@ -1,5 +1,10 @@
 # reverse-kimi
 
+![](https://img.shields.io/github/license/sherlcok314159/reverse-kimi)
+![](https://img.shields.io/github/stars/sherlcok314159/reverse-kimi)
+![](https://img.shields.io/github/forks/sherlcok314159/reverse-kimi)
+![](https://img.shields.io/docker/pulls/yunpengtai/reverse-kimi)
+
 ## 目录
 
 * [声明](#声明)
