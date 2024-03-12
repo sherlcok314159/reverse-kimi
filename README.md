@@ -1,9 +1,9 @@
 # reverse-kimi
 
-![](https://img.shields.io/github/license/sherlcok314159/reverse-kimi)
-![](https://img.shields.io/github/stars/sherlcok314159/reverse-kimi)
-![](https://img.shields.io/github/forks/sherlcok314159/reverse-kimi)
-![](https://img.shields.io/docker/pulls/yunpengtai/reverse-kimi)
+![](https://img.shields.io/github/license/sherlcok314159/reverse-kimi.svg)
+![](https://img.shields.io/github/stars/sherlcok314159/reverse-kimi.svg)
+![](https://img.shields.io/github/forks/sherlcok314159/reverse-kimi.svg)
+![](https://img.shields.io/docker/pulls/yunpengtai/reverse-kimi.svg)
 
 ## 目录
 
