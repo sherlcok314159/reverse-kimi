@@ -51,6 +51,9 @@
 登录 [Kimi官网](https://kimi.moonshot.cn/chat/)，打开一个聊天界面，等个十分钟左右，打开浏览器调试界面[F12]，然后刷新，寻找 access_token 和 refresh_token
 ![](images/console.png)
 
+---
+
+无论用下面何种部署方式，模型的名字是`moonshot-v1`，也就是你需要填入 UI 中的
 
 ### 手动部署
 
