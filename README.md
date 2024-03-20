@@ -7,14 +7,14 @@
 
 ## 目录
 
-* [声明](#声明)
-* [Features](#Features)
-* [效果](#效果)
-* [教程](#教程)
-  * [手动部署](#手动部署)
-  * [docker 部署](#docker)
-  * [docker-compose](#docker-compose)
-* [注意事项](#注意事项)
+- [声明](#声明)
+- [Features](#Features)
+- [效果](#效果)
+- [教程](#教程)
+  - [手动部署](#手动部署)
+  - [docker 部署](#docker)
+  - [docker-compose](#docker-compose)
+- [注意事项](#注意事项)
 
 ## 声明
 
@@ -22,7 +22,7 @@
 
 ## Features
 
-- 逆向了月之暗面公司的 Kimi-chat，通过模拟网页端交互来免费调用 API，可以将其加入一些自建 UI，比如 Chat-Next-web 和 lobe-chat
+- 生态支持广：支持加入自建 UI，比如 Chat-Next-web 和 lobe-chat，以及配合 one-api 使用
 - 支持网页搜索（关键词或者网址）
 - 支持文件阅读（文件链接）
 - 支持多轮对话
@@ -35,20 +35,20 @@
 ## 效果
 
 1. 验证是否是 Kimi
-![](images/who.png)
+   ![](images/who.png)
 2. Kimi 自带的浏览功能
-![](images/browse.png)
-![](images/usa.png)
+   ![](images/browse.png)
+   ![](images/usa.png)
 3. Kimi 自带的文件阅读功能
-![](images/pdf.png)
+   ![](images/pdf.png)
 4. Kimi 多轮对话
-![](images/multi_turn.png)
+   ![](images/multi_turn.png)
 
 ## 教程
 
 ### 获取变量
 
-登录 [Kimi官网](https://kimi.moonshot.cn/chat/)，打开一个聊天界面，等个十分钟左右，打开浏览器调试界面[F12]，然后刷新，寻找 access_token 和 refresh_token
+登录 [Kimi 官网](https://kimi.moonshot.cn/chat/)，打开一个聊天界面，等个十分钟左右，打开浏览器调试界面[F12]，然后刷新，寻找 access_token 和 refresh_token
 ![](images/console.png)
 
 ---
@@ -58,22 +58,22 @@
 ### 手动部署
 
 - 首先按照 requirements.txt 安装好依赖
-- 根目录创建`config.json`，填入我们刚刚抓取的变量，token 为你的 key，如果不填会返回未认证错误，可以理解为 openai 的 api key
-    ```json
-    {
-        "token": "Bearer ...",
-        "auth_token": "Bearer ...",
-        "refresh_token": "Bearer ..."
-    }
-    ```
+- 根目录创建`config.json`，填入我们刚刚抓取的变量，token 为你个人的 key（这里并非是什么官方，自己设置即可），如果不填会返回未认证错误，可以理解为 openai 的 api key，这里**不要加 Bearer**
+  ```json
+  {
+    "token": "12345678", // 举个例子
+    "auth_token": "Bearer ...",
+    "refresh_token": "Bearer ..."
+  }
+  ```
 - 再开两个终端，一个负责刷新，一个负责接受请求
-    ```bash
-    # 终端一
-    python main.py
-    --------
-    # 终端二
-    python server.py
-    ```
+  ```bash
+  # 终端一
+  python main.py
+  --------
+  # 终端二
+  python server.py
+  ```
 
 ### docker
 
@@ -81,9 +81,9 @@ docker 部署时，当前目录创建`config.json`，填入我们刚刚抓取的
 
 ```json
 {
-    "token": "Bearer ...",
-    "auth_token": "Bearer ...",
-    "refresh_token": "Bearer ..."
+  "token": "12345678",
+  "auth_token": "Bearer ...",
+  "refresh_token": "Bearer ..."
 }
 ```
 
@@ -97,6 +97,7 @@ docker run --name reverse-kimi \
 ```
 
 ### docker-compose
+
 ```
 version: '3'
 
@@ -131,3 +132,34 @@ services:
     "max_tokens": int
 }
 ```
+
+## 调用示例
+
+### one-api 示例
+
+对于所有自建 UI，都可以使用 one-api 集成，然后进行对接
+
+![one-api](./images/one-api.png)
+
+### Python 调用
+
+```python
+url = "http://127.0.0.1:6867/v1/chat/completions"
+prompt = [{'content': '天空为什么不是红色', 'role': 'user'}]
+
+payload = {
+    "model": "moonshot-v1",
+    "messages": [{"role": "user", "content": prompt}],
+}
+headers = {
+    "Authorization": "Bearer 12345678"
+}
+response = requests.request("POST", url, headers=headers, json=payload)
+
+for chunk in response.iter_lines(chunk_size=1024):
+    print(chunk)
+```
+
+### 可能的问题
+
+chat-next-web 会额外调用 Options 路由，可以使用 one-api 集成然后使用
