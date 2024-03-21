@@ -1,5 +1,6 @@
 import json
 import time
+import re
 
 import requests
 
@@ -37,12 +38,22 @@ def create_conversation(name):
     return response['id']
 
 
+def format_url(text):
+    url_pattern = r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
+    urls = re.findall(url_pattern, text)
+    for url in urls:
+        new_url = f'<url id="" type="url" status="" title="" wc="">{url}</url>'
+        text = text.replace(url, new_url)
+    return text
+
+
 def process_msg(messages):
     concat_content = ''
     for msg in messages:
         role, content = msg['role'], msg['content']
         single_msg = f'{role}: {content}\n\n'
         concat_content += single_msg
+    concat_content = format_url(concat_content)
     return [{'content': concat_content, 'role': 'user'}]
 
 
