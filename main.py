@@ -72,6 +72,8 @@ async def get_reply(messages):
         print(status_code)
         print(response.content.decode('utf-8'))
     else:
+        search_content = '\n\n参考：\n'
+        url = None
         for r in response.iter_lines():
             if r:
                 decoded = r.decode('utf-8')
@@ -92,6 +94,26 @@ async def get_reply(messages):
                                 ],
                             }
                         )
+                    elif json_data['event'] == 'search_plus':
+                        msg = json_data['msg']
+                        if 'url' in msg:
+                            title, url = msg['title'], msg['url']
+                            search_content += f'- [{title}]({url})\n'
+    if url is not None:
+        yield json.dumps(
+            {
+                "object": "chat.completion.chunk",
+                "model": "moonshot-v1",
+                "choices": [
+                    {
+                        "delta":  {"content": search_content},
+                        "index": 0,
+                        "finish_reason": "search",
+                    }
+                ],
+            }
+        )
+
     yield json.dumps(
         {
             "object": "chat.completion.chunk",
