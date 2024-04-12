@@ -74,6 +74,7 @@ async def get_reply(messages):
     else:
         search_content = '\n\n参考：\n'
         url = None
+        link_count = 1
         for r in response.iter_lines():
             if r:
                 decoded = r.decode('utf-8')
@@ -83,32 +84,34 @@ async def get_reply(messages):
                         answer = json_data['text']
                         yield json.dumps(
                             {
-                                "object": "chat.completion.chunk",
-                                "model": "moonshot-v1",
-                                "choices": [
+                                'object': 'chat.completion.chunk',
+                                'model': 'moonshot-v1',
+                                'choices': [
                                     {
-                                        "delta":  {"content": answer},
-                                        "index": 0,
-                                        "finish_reason": None,
+                                        'delta':  {'content': answer},
+                                        'index': 0,
+                                        'finish_reason': None,
                                     }
                                 ],
                             }
                         )
+
                     elif json_data['event'] == 'search_plus':
                         msg = json_data['msg']
                         if 'url' in msg:
                             title, url = msg['title'], msg['url']
-                            search_content += f'- [{title}]({url})\n'
+                            search_content += f'{link_count}. [{title}]({url})\n'
+                            link_count += 1
     if url is not None:
         yield json.dumps(
             {
-                "object": "chat.completion.chunk",
-                "model": "moonshot-v1",
-                "choices": [
+                'object': 'chat.completion.chunk',
+                'model': 'moonshot-v1',
+                'choices': [
                     {
-                        "delta":  {"content": search_content},
-                        "index": 0,
-                        "finish_reason": "search",
+                        'delta':  {'content': search_content},
+                        'index': 0,
+                        'finish_reason': 'search',
                     }
                 ],
             }
@@ -116,13 +119,13 @@ async def get_reply(messages):
 
     yield json.dumps(
         {
-            "object": "chat.completion.chunk",
-            "model": "moonshot-v1",
-            "choices": [
+            'object': 'chat.completion.chunk',
+            'model': 'moonshot-v1',
+            'choices': [
                 {
-                    "delta":  {},
-                    "index": 0,
-                    "finish_reason": "stop",
+                    'delta':  {},
+                    'index': 0,
+                    'finish_reason': 'stop',
                 }
             ],
         }

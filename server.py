@@ -22,15 +22,15 @@ class Request(BaseModel):
     max_tokens: int = None
 
 
-@app.post("/v1/chat/completions")
+@app.post('/v1/chat/completions')
 async def answer(request: Request, token: str = Depends(oauth2_scheme)):
     if token != TOKEN:
-        print(f"请求的 token: {token}")
-        print(f"设置的 token: {TOKEN}")
+        print(f'请求的 token: {token}')
+        print(f'设置的 token: {TOKEN}')
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid authentication credentials",
-            headers={"WWW-Authenticate": "Bearer"},
+            detail='Invalid authentication credentials',
+            headers={'WWW-Authenticate': 'Bearer'},
         )
     # .model_dump() 相当于 .dict()
     messages = request.model_dump()['messages']
@@ -38,4 +38,4 @@ async def answer(request: Request, token: str = Depends(oauth2_scheme)):
 
 if __name__ == '__main__':
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=6867)
+    uvicorn.run(app, host='0.0.0.0', port=6867)
